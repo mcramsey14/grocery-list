@@ -29,7 +29,7 @@ class _ToDoListState extends State<ToDoList> {
         _itemSet.add(item);
         items.add(item);
       } else {
-        print("Making Undone");
+        print("Marking Undone");
         _itemSet.remove(item);
         items.insert(0, item);
       }
