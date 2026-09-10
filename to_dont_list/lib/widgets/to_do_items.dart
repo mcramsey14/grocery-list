@@ -4,7 +4,7 @@ import 'package:to_dont_list/objects/item.dart';
 typedef ToDoListChangedCallback = Function(Item item, bool completed);
 typedef ToDoListRemovedCallback = Function(Item item);
 
-class ToDoListItem extends StatelessWidget {
+class ToDoListItem extends StatefulWidget {
   ToDoListItem(
       {required this.item,
       required this.completed,
@@ -33,29 +33,46 @@ class ToDoListItem extends StatelessWidget {
     if (!completed) return null;
 
     return const TextStyle(
-      color: Colors.black54,
+      color: Colors.black,
       decoration: TextDecoration.lineThrough,
     );
   }
-
+  @override
+  State<ToDoListItem> createState() => _ToDoListItemState();
+  
+}
+class _ToDoListItemState extends State<ToDoListItem> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {
-        onListChanged(item, completed);
+        widget.onListChanged(widget.item, widget.completed);
       },
-      onLongPress: completed
+      onLongPress: widget.completed
           ? () {
-              onDeleteItem(item);
+              widget.onDeleteItem(widget.item);
             }
           : null,
       leading: CircleAvatar(
-        backgroundColor: _getColor(context),
-        child: Text(item.abbrev()),
+        backgroundColor: widget._getColor(context),
+        child: Text(widget.item.quantity.toString()),
       ),
       title: Text(
-        item.name,
-        style: _getTextStyle(context),
+        widget.item.name,
+        style: widget._getTextStyle(context),
+      ),
+      //OverflowBar implementation from https://api.flutter.dev/flutter/widgets/OverflowBar-class.html
+      trailing: OverflowBar(
+        spacing: 8,
+        overflowAlignment: OverflowBarAlignment.end,
+        children: <Widget>[
+          ElevatedButton(key: const Key("Increment"), onPressed: (){
+            setState((){widget.item.increment();});
+            },child: const Text('+'),),
+          ElevatedButton(key: const Key("Decrement"), onPressed: (){
+            setState((){widget.item.decrement();});
+            }, child: const Text('-')),
+        ],
       ),
     );
   }

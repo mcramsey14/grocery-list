@@ -5,10 +5,7 @@ class Item {
 
   int quantity;
   final String name;
-
-  String abbrev() {
-    return name.substring(0, 1);
-  }
+  
   increment(){
     quantity ++;
   }

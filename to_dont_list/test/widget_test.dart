@@ -13,11 +13,6 @@ import 'package:to_dont_list/objects/item.dart';
 import 'package:to_dont_list/widgets/to_do_items.dart';
 
 void main() {
-  test('Item abbreviation should be first letter', () {
-    Item item = Item(name: "add more todos");
-    expect(item.abbrev(), "a");
-  });
-
   // Yes, you really need the MaterialApp and Scaffold
   testWidgets('ToDoListItem has a text', (tester) async {
     await tester.pumpWidget(MaterialApp(
@@ -34,7 +29,7 @@ void main() {
     expect(textFinder, findsOneWidget);
   });
 
-  testWidgets('ToDoListItem has a Circle Avatar with abbreviation',
+  testWidgets('ToDoListItem has a Circle Avatar with item count',
       (tester) async {
     await tester.pumpWidget(MaterialApp(
         home: Scaffold(
@@ -43,7 +38,7 @@ void main() {
                 completed: true,
                 onListChanged: (Item item, bool completed) {},
                 onDeleteItem: (Item item) {}))));
-    final abbvFinder = find.text('t');
+    final quantityFinder = find.text("1");
     final avatarFinder = find.byType(CircleAvatar);
 
     CircleAvatar circ = tester.firstWidget(avatarFinder);
@@ -51,9 +46,9 @@ void main() {
 
     // Use the `findsOneWidget` matcher provided by flutter_test to verify
     // that the Text widgets appear exactly once in the widget tree.
-    expect(abbvFinder, findsOneWidget);
+    expect(quantityFinder, findsOneWidget);
     expect(circ.backgroundColor, Colors.black54);
-    expect(ctext.data, "t");
+    expect(ctext.data, "1");
   });
 
   testWidgets('Default ToDoList has one item', (tester) async {
@@ -86,5 +81,18 @@ void main() {
     expect(listItemFinder, findsNWidgets(2));
   });
 
+
+  testWidgets('Increment and Decrement buttons add to and subtract from quantity', (tester) async{
+    await tester.pumpWidget(const MaterialApp(home: ToDoList()));
+
+    await tester.tap(find.byKey(const Key("Increment")));
+    await tester.pump();
+    expect(find.text("2"), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key("Decrement")));
+    await tester.pump();
+    expect(find.text("1"), findsOneWidget);
+
+  });
   // One to test the tap and press actions on the items?
 }
