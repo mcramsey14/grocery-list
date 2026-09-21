@@ -12,10 +12,10 @@ class ToDoList extends StatefulWidget {
 }
 
 class _ToDoListState extends State<ToDoList> {
-  final List<Item> items = [Item(name: "add more groceries")];
-  final _itemSet = <Item>{};
+  final List<GroceryItem> items = [GroceryItem(name: "add more groceries")];
+  final _itemSet = <GroceryItem>{};
 
-  void _handleListChanged(Item item, bool completed) {
+  void _handleListChanged(GroceryItem item, bool completed) {
     setState(() {
       // When a user changes what's in the list, you need
       // to change _itemSet inside a setState call to
@@ -36,7 +36,7 @@ class _ToDoListState extends State<ToDoList> {
     });
   }
 
-  void _handleDeleteItem(Item item) {
+  void _handleDeleteItem(GroceryItem item) {
     setState(() {
       print("Deleting item");
       items.remove(item);
@@ -47,7 +47,7 @@ class _ToDoListState extends State<ToDoList> {
     setState(() {
       print("Adding new item");
       String itemName = itemText;
-      Item item = Item(name: itemName);
+      GroceryItem item = GroceryItem(name: itemName);
       items.insert(0, item);
       textController.clear();
     });
@@ -62,7 +62,7 @@ class _ToDoListState extends State<ToDoList> {
         body: ListView(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           children: items.map((item) {
-            return ToDoListItem(
+            return GroceryListItem(
               item: item,
               completed: _itemSet.contains(item),
               onListChanged: _handleListChanged,

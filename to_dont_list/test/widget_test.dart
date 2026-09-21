@@ -17,11 +17,11 @@ void main() {
   testWidgets('ToDoListItem has a text', (tester) async {
     await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-            body: ToDoListItem(
-                item: Item(name: "test", quantity: 1),
+            body: GroceryListItem(
+                item: GroceryItem(name: "test", quantity: 1),
                 completed: true,
-                onListChanged: (Item item, bool completed) {},
-                onDeleteItem: (Item item) {}))));
+                onListChanged: (GroceryItem item, bool completed) {},
+                onDeleteItem: (GroceryItem item) {}))));
     final textFinder = find.text('test');
 
     // Use the `findsOneWidget` matcher provided by flutter_test to verify
@@ -33,11 +33,11 @@ void main() {
       (tester) async {
     await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-            body: ToDoListItem(
-                item: Item(name: "test", quantity: 1),
+            body: GroceryListItem(
+                item: GroceryItem(name: "test", quantity: 1),
                 completed: true,
-                onListChanged: (Item item, bool completed) {},
-                onDeleteItem: (Item item) {}))));
+                onListChanged: (GroceryItem item, bool completed) {},
+                onDeleteItem: (GroceryItem item) {}))));
     final quantityFinder = find.text("1");
     final avatarFinder = find.byType(CircleAvatar);
 
@@ -54,7 +54,7 @@ void main() {
   testWidgets('Default ToDoList has one item', (tester) async {
     await tester.pumpWidget(const MaterialApp(home: ToDoList()));
 
-    final listItemFinder = find.byType(ToDoListItem);
+    final listItemFinder = find.byType(GroceryListItem);
 
     expect(listItemFinder, findsOneWidget);
   });
@@ -76,7 +76,7 @@ void main() {
     await tester.pump();
     expect(find.text("hi"), findsOneWidget);
 
-    final listItemFinder = find.byType(ToDoListItem);
+    final listItemFinder = find.byType(GroceryListItem);
 
     expect(listItemFinder, findsNWidgets(2));
   });

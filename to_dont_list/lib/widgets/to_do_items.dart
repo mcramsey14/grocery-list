@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:to_dont_list/objects/item.dart';
 
-typedef ToDoListChangedCallback = Function(Item item, bool completed);
-typedef ToDoListRemovedCallback = Function(Item item);
+typedef GroceryListChangedCallback = Function(GroceryItem item, bool completed);
+typedef GroceryListRemovedCallback = Function(GroceryItem item);
 
-class ToDoListItem extends StatefulWidget {
-  ToDoListItem(
+class GroceryListItem extends StatefulWidget {
+  GroceryListItem(
       {required this.item,
       required this.completed,
       required this.onListChanged,
       required this.onDeleteItem})
       : super(key: ObjectKey(item));
 
-  final Item item;
+  final GroceryItem item;
   final bool completed;
 
-  final ToDoListChangedCallback onListChanged;
-  final ToDoListRemovedCallback onDeleteItem;
+  final GroceryListChangedCallback onListChanged;
+  final GroceryListRemovedCallback onDeleteItem;
 
   Color _getColor(BuildContext context) {
     // The theme depends on the BuildContext because different
@@ -26,7 +26,7 @@ class ToDoListItem extends StatefulWidget {
 
     return completed //
         ? Colors.black54
-        : Theme.of(context).primaryColor;
+        : Colors.lightBlue;
   }
 
   TextStyle? _getTextStyle(BuildContext context) {
@@ -38,10 +38,10 @@ class ToDoListItem extends StatefulWidget {
     );
   }
   @override
-  State<ToDoListItem> createState() => _ToDoListItemState();
+  State<GroceryListItem> createState() => _GroceryListItemState();
   
 }
-class _ToDoListItemState extends State<ToDoListItem> {
+class _GroceryListItemState extends State<GroceryListItem> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
